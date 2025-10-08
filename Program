@@ -1,0 +1,69 @@
+import Home from "./components/Home";
+import Listings from "./components/Listings";
+import Contact from "./components/Contact";
+
+function App() {
+  return (
+    <div>
+      <Home />
+      <Listings />
+      <Contact />
+    </div>
+  );
+}
+export default App;
+export default function Home() {
+  return (
+    <section>
+      <h1>Realtor in Barsana</h1>
+      <p>Find your dream home or property in Barsana with trusted local real estate experts.</p>
+    </section>
+  );
+}
+import EditableImage from "./EditableImage";
+import listings from "../data/listings.json";
+
+export default function Listings() {
+  return (
+    <section>
+      <h2>Properties Available</h2>
+      <ul>
+        {listings.map(l => (
+          <li key={l.id}>
+            <h3>{l.name}</h3>
+            <EditableImage src={l.image} alt={l.name} />
+            <p>{l.description}</p>
+            <p>Price: {l.price}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+import { useState } from "react";
+export default function EditableImage({ src, alt }) {
+  const [image, setImage] = useState(src);
+  const handleChange = e => {
+    const file = e.target.files[0];
+    if (file) setImage(URL.createObjectURL(file));
+  };
+  return (
+    <div>
+      <img src={image} alt={alt} width={200} />
+      <input type="file" onChange={handleChange} />
+    </div>
+  );
+}
+export default function Contact() {
+  return (
+    <section>
+      <h2>Contact Us</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Email" required />
+        <textarea placeholder="Your Query"></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  );
+}
